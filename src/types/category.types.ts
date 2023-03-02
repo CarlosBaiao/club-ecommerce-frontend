@@ -2,6 +2,6 @@ interface Category {
   id: string
   name: string
   displayName: string
-  imageURL: string
+  imageUrl: string
 }
 export default Category
