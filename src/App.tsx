@@ -1,10 +1,13 @@
 import { FunctionComponent } from 'react'
+
+// Components
+import Header from './components/header/header.components'
 interface AppProps {
   message?: string
 }
 
 const App: FunctionComponent<AppProps> = ({ message }) => {
-  return <h1>Hello word</h1>
+  return <Header />
 }
 
 export default App
