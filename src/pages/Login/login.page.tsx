@@ -17,21 +17,46 @@ import {
   LoginInputContainer,
   LoginSubtitle
 } from './login.styles'
+import {
+  AuthError,
+  AuthErrorCodes,
+  signInWithEmailAndPassword
+} from 'firebase/auth'
+import { auth } from '../../config/firebase.config'
 
 interface LoginForm {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 const Login = () => {
   const {
     register,
     formState: { errors },
-    handleSubmit
+    handleSubmit,
+    setError
   } = useForm<LoginForm>()
 
-  const handleSubmitPress = (data: any) => {
-    console.log(data)
+  const handleSubmitPress = async (data: LoginForm) => {
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
+
+      console.log(userCredentials)
+    } catch (error) {
+      const _error = error as AuthError
+
+      if (_error.code === AuthErrorCodes.USER_DELETED) {
+        return setError('email', { type: 'notFound' })
+      }
+
+      if (_error.code === AuthErrorCodes.INVALID_PASSWORD) {
+        return setError('password', { type: 'mismatch' })
+      }
+    }
   }
 
   return (
@@ -60,12 +85,18 @@ const Login = () => {
               })}
             />
 
+            {errors.email?.type === 'notFound' && (
+              <InputErrorMessage>O e-mail não foi encontrado.</InputErrorMessage>
+            )}
+
             {errors.email?.type === 'required' && (
               <InputErrorMessage>O e-mail é obrigatório.</InputErrorMessage>
             )}
 
             {errors.email?.type === 'validate' && (
-              <InputErrorMessage>Por favor, insira um e-mail válido.</InputErrorMessage>
+              <InputErrorMessage>
+                Por favor, insira um e-mail válido.
+              </InputErrorMessage>
             )}
           </LoginInputContainer>
           <LoginInputContainer>
@@ -79,6 +110,10 @@ const Login = () => {
 
             {errors.password?.type === 'required' && (
               <InputErrorMessage>A senha é obrigatória.</InputErrorMessage>
+            )}
+
+            {errors.password?.type === 'mismatch' && (
+              <InputErrorMessage>A senha é inválida.</InputErrorMessage>
             )}
           </LoginInputContainer>
 
