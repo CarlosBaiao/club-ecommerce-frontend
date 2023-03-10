@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { getDocs, collection } from 'firebase/firestore'
 
 // Components
@@ -18,13 +18,16 @@ const Categories = () => {
   const fetchCategories = async () => {
     try {
       const categoriesFromFirestore: Category[] = []
+
       const querySnapshot = await getDocs(
         collection(db, 'categories').withConverter(categoryConverter)
       )
+
       querySnapshot.forEach((doc) => {
         categoriesFromFirestore.push(doc.data())
-        setCategories(categoriesFromFirestore)
       })
+
+      setCategories(categoriesFromFirestore)
     } catch (error) {
       console.log({ error })
     }
