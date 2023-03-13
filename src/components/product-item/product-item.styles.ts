@@ -7,6 +7,9 @@ interface ProductImageProps {
 export const ProductContainer = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `
 
 export const ProductInfo = styled.div`
@@ -28,4 +31,27 @@ export const ProductImage = styled.div<ProductImageProps>`
   background-position: center;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: flex-end;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  background-blend-mode: color;
+  button {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s ease;
+    margin: 20px;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: color;
+    cursor: pointer;
+    button {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `
