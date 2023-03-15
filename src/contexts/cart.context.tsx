@@ -7,6 +7,7 @@ interface ICartContext {
   toggleCart: () => void
   products: CartProduct[]
   addProductToCart: (product: Product) => void
+  removeProductFromCart: (productId: string) => void
 }
 
 interface BaseLayoutProps {
@@ -17,7 +18,8 @@ export const CartContext = createContext<ICartContext>({
   isVisible: false,
   products: [],
   toggleCart: () => {},
-  addProductToCart: () => {}
+  addProductToCart: () => {},
+  removeProductFromCart: () => {}
 })
 
 const CartContextProvider: FunctionComponent<BaseLayoutProps> = ({
@@ -47,9 +49,21 @@ const CartContextProvider: FunctionComponent<BaseLayoutProps> = ({
     setProducts((prevState) => [...prevState, { ...product, quantity: 1 }])
   }
 
+  const removeProductFromCart = (productId: string) => {
+    setProducts((products) =>
+      products.filter((product) => product.id !== productId)
+    )
+  }
+
   return (
     <CartContext.Provider
-      value={{ isVisible, products, toggleCart, addProductToCart }}>
+      value={{
+        isVisible,
+        products,
+        toggleCart,
+        addProductToCart,
+        removeProductFromCart
+      }}>
       {children}
     </CartContext.Provider>
   )
