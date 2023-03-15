@@ -9,6 +9,7 @@ import Login from './pages/login/login.page'
 import SignUpPage from './pages/sign-up/sign-up.page'
 import ExplorePage from './pages/explore/explore.page'
 import CategoryDetailsPage from './pages/category-details/category-details.page'
+import CheckoutPage from './pages/checkout/checkout.page'
 
 // Components
 import Loading from './components/loading/loading.component'
@@ -57,6 +58,7 @@ const App: FunctionComponent = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/category/:id" element={<CategoryDetailsPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>
