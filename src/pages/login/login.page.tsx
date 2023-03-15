@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BsGoogle } from 'react-icons/bs'
 import { FiLogIn } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
@@ -11,6 +11,7 @@ import {
   signInWithPopup
 } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 // Components
 import CustomButton from '../../components/custom-button/custom-button.component'
@@ -30,7 +31,6 @@ import {
 
 // Utilities
 import { auth, db, googleProvider } from '../../config/firebase.config'
-import { UserContext } from '../../contexts/user.context'
 
 interface LoginForm {
   email: string
@@ -47,7 +47,9 @@ const Login = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { isAuthenticated } = useContext(UserContext)
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  )
 
   const navigate = useNavigate()
 
@@ -117,7 +119,7 @@ const Login = () => {
   return (
     <>
       <Header />
-      {isLoading && <Loading/>}
+      {isLoading && <Loading />}
       <LoginContainer>
         <LoginContent>
           <LoginHeadline>Entre com a sua conta</LoginHeadline>
