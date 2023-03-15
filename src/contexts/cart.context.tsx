@@ -1,11 +1,12 @@
-import { createContext, FunctionComponent, ReactNode, useState } from 'react'
+import { createContext, FunctionComponent, ReactNode, useMemo, useState } from 'react'
 import CartProduct from '../types/cart.types'
 import Product from '../types/product.type'
 
 interface ICartContext {
   isVisible: boolean
-  toggleCart: () => void
   products: CartProduct[]
+  productsTotalPrice: number
+  toggleCart: () => void
   addProductToCart: (product: Product) => void
   removeProductFromCart: (productId: string) => void
   increaseProductQuantity: (productId: string) => void
@@ -19,6 +20,7 @@ interface BaseLayoutProps {
 export const CartContext = createContext<ICartContext>({
   isVisible: false,
   products: [],
+  productsTotalPrice: 0,
   toggleCart: () => {},
   addProductToCart: () => {},
   removeProductFromCart: () => {},
@@ -31,6 +33,12 @@ const CartContextProvider: FunctionComponent<BaseLayoutProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [products, setProducts] = useState<CartProduct[]>([])
+
+  const productsTotalPrice = useMemo(() => {
+    return products.reduce((acc, currentProduct) => {
+      return acc + currentProduct.price * currentProduct.quantity
+    }, 0)
+  }, [products])
 
   const toggleCart = () => {
     setIsVisible((prevState) => !prevState)
@@ -71,11 +79,13 @@ const CartContextProvider: FunctionComponent<BaseLayoutProps> = ({
 
   const decreaseProductQuantity = (productId: string) => {
     setProducts((products) =>
-      products.map((product) =>
-        product.id === productId
-          ? { ...product, quantity: product.quantity - 1 }
-          : product
-      ).filter(product => product.quantity > 0)
+      products
+        .map((product) =>
+          product.id === productId
+            ? { ...product, quantity: product.quantity - 1 }
+            : product
+        )
+        .filter((product) => product.quantity > 0)
     )
   }
 
@@ -84,6 +94,7 @@ const CartContextProvider: FunctionComponent<BaseLayoutProps> = ({
       value={{
         isVisible,
         products,
+        productsTotalPrice,
         toggleCart,
         addProductToCart,
         removeProductFromCart,
