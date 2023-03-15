@@ -8,6 +8,7 @@ interface ICartContext {
   products: CartProduct[]
   addProductToCart: (product: Product) => void
   removeProductFromCart: (productId: string) => void
+  increaseProductQuantity: (productId: string) => void
 }
 
 interface BaseLayoutProps {
@@ -19,7 +20,8 @@ export const CartContext = createContext<ICartContext>({
   products: [],
   toggleCart: () => {},
   addProductToCart: () => {},
-  removeProductFromCart: () => {}
+  removeProductFromCart: () => {},
+  increaseProductQuantity: () => {}
 })
 
 const CartContextProvider: FunctionComponent<BaseLayoutProps> = ({
@@ -55,6 +57,16 @@ const CartContextProvider: FunctionComponent<BaseLayoutProps> = ({
     )
   }
 
+  const increaseProductQuantity = (productId: string) => {
+    setProducts((products) =>
+      products.map((product) =>
+        product.id === productId
+          ? { ...product, quantity: product.quantity + 1 }
+          : product
+      )
+    )
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -62,7 +74,8 @@ const CartContextProvider: FunctionComponent<BaseLayoutProps> = ({
         products,
         toggleCart,
         addProductToCart,
-        removeProductFromCart
+        removeProductFromCart,
+        increaseProductQuantity
       }}>
       {children}
     </CartContext.Provider>
