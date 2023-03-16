@@ -27,11 +27,11 @@ import { useAppSelector } from './hooks/redux.hooks'
 const App: FunctionComponent = () => {
   const [isInitializing, setIsInitializing] = useState(true)
 
+  const dispatch = useDispatch()
+
   const { isAuthenticated } = useAppSelector(
     (rootReducer) => rootReducer.userReducer
   )
-
-  const dispatch = useDispatch()
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {

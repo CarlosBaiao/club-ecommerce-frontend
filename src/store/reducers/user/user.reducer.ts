@@ -12,7 +12,10 @@ const initialState: InitialState = {
   isAuthenticated: false
 }
 
-const userReducer = (state = initialState, action: UserActions): InitialState => {
+const userReducer = (
+  state = initialState,
+  action: UserActions
+): InitialState => {
   switch (action.type) {
     case UserActionTypes.LOGIN:
       return { ...state, currentUser: action.payload, isAuthenticated: true }
@@ -24,7 +27,7 @@ const userReducer = (state = initialState, action: UserActions): InitialState =>
         isAuthenticated: false
       }
     default:
-      return { ...state }
+      return state
   }
 }
 
