@@ -21,7 +21,7 @@ import { auth, db } from './config/firebase.config'
 import { userConverter } from './converters/firestore.converters'
 import AuthenticationGuard from './guards/authentication.guard'
 import PaymentConfirmationPage from './pages/payment-confirmation/payment-confirmation.page'
-import { loginUser, logoutUser } from './store/reducers/user/user.actions'
+import { loginUser, logoutUser } from './store/toolkit/user/user.slice'
 import { useAppSelector } from './hooks/redux.hooks'
 
 const App: FunctionComponent = () => {
