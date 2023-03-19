@@ -7,7 +7,7 @@ import { useAppSelector } from '../../hooks/redux.hooks'
 // Utilities
 import { auth } from '../../config/firebase.config'
 import { logoutUser } from '../../store/toolkit/user/user.slice'
-import { toggleCart } from '../../store/reducers/cart/cart.actions'
+import { toggleCart } from '../../store/toolkit/cart/cart.slice'
 import { selectProductsCount } from '../../store/reducers/cart/cart.selectors'
 
 // Style

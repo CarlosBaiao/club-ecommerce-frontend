@@ -11,7 +11,7 @@ import {
 
 // Utilities
 import Product from '../../types/product.type'
-import { addProductToCart } from '../../store/reducers/cart/cart.actions'
+import { addProductToCart } from '../../store/toolkit/cart/cart.slice'
 
 // Components
 import CustomButton from '../custom-button/custom-button.component'

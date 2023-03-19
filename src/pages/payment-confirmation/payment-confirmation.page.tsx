@@ -19,7 +19,7 @@ import {
 import Colors from '../../theme/theme.colors'
 
 // Utilities
-import { clearCartProducts } from '../../store/reducers/cart/cart.actions'
+import { clearCartProducts } from '../../store/toolkit/cart/cart.slice'
 
 const PaymentConfirmationPage: FunctionComponent = () => {
   const dispatch = useDispatch()
