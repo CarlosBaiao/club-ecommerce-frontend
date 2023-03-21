@@ -40,7 +40,7 @@ describe('Cart', () => {
     expect(queryByText(/ir para o checkout/i)).toBeNull()
   })
 
-  it('should increase product quantity on increase click', () => {
+  it('should decrease product quantity on decrease click', () => {
     const { getByLabelText, getByText } = renderWithRedux(<Cart />, {
       preloadedState: {
         cartReducer: {
@@ -61,5 +61,27 @@ describe('Cart', () => {
     userEvent.click(increaseButton)
 
     getByText('3')
+  })
+  it('should increase product quantity on increase click', () => {
+    const { getByLabelText, getByText } = renderWithRedux(<Cart />, {
+      preloadedState: {
+        cartReducer: {
+          products: [
+            {
+              id: '1',
+              imageUrl: 'image_url',
+              name: 'teste',
+              price: 100,
+              quantity: 2
+            }
+          ]
+        }
+      } as any
+    })
+    const decreaseButton = getByLabelText(/decrease quantity of teste/i)
+
+    userEvent.click(decreaseButton)
+
+    getByText('1')
   })
 })
