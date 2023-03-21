@@ -44,7 +44,7 @@ const CartItem: FunctionComponent<CartItemProps> = ({ product }) => {
 
       <CartItemInfo>
         <p>{product.name}</p>
-        <p>RS{product.price}</p>
+        <p>R${product.price}</p>
         <CartItemQuantity>
           <AiOutlineMinus size={20} onClick={handleDecreaseClick} />
           <p>{product.quantity}</p>
