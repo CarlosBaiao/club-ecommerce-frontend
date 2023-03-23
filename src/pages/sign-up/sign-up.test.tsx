@@ -42,7 +42,9 @@ describe('Sig Up', () => {
 
     const passwordInput = getByPlaceholderText(/digite sua senha/i)
 
-    const passwordConfirmationInput = getByPlaceholderText(/digite novamente sua senha/i)
+    const passwordConfirmationInput = getByPlaceholderText(
+      /digite novamente sua senha/i
+    )
 
     userEvent.type(passwordInput, '123456')
 
@@ -53,5 +55,22 @@ describe('Sig Up', () => {
     userEvent.click(submitButton)
 
     await findByText(/a confirmação de senha precisa ser igual a senha./i)
+  })
+
+  it('should show error when password has less than 6 characters', async () => {
+    const { getByText, findByText, getByPlaceholderText } = renderWithRedux(
+      <SignUpPage />,
+      {}
+    )
+
+    const passwordInput = getByPlaceholderText(/digite sua senha/i)
+
+    userEvent.type(passwordInput, '123')
+
+    const submitButton = getByText('Criar Conta', { selector: 'button' })
+
+    userEvent.click(submitButton)
+
+    await findByText(/a senha precisa ter no mínimo 6 caracteres./i)
   })
 })
